@@ -1,0 +1,77 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+
+  - name: Install a list of packages
+    apt:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - tmux
+      - vim
+      - vim-gtk3
+      - emacs
+      - openvpn
+      - netowrk-manager-openvpn
+      - netowrk-manager-openvpn-gnome       
+      - htop
+      - stress
+      - python3
+      - ipython3
+      - python3-pip
+      - firefox
+      - openvpn
+      - ca-certificates
+      - apt-transport-https
+      - gconf2
+      - libasound2
+      - libgtk2.0-0
+      - libxss1
+  
+  - name: install key (apt)
+    become: yes
+    apt_key:
+      url: 'https://packages.microsoft.com/keys/microsoft.asc'
+      state: present
+
+  - name: install VS Code repo (apt)
+    become: yes
+    apt_repository:
+      repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+      filename: vscode
+      state: present
+
+  - name: install VS Code (apt)
+    become: yes
+    apt:
+      name: code
+      state: present
+
+  - name: Installing Zsh and git
+    apt: pkg=zsh,git state=latest
+    register: installation
+
+  - name: Backing up existing ~/.zshrc
+    shell: if [ -f ~/.zshrc ]; then mv ~/.zshrc{,.orig}; fi
+    when: installation|success
+    become: no
+
+  - name: Cloning  oh-my-zsh
+    git:
+      repo=https://github.com/robbyrussell/oh-my-zsh
+      dest=~/.oh-my-zsh
+    when: installation|success
+    register: cloning
+    become: no
+
+  - name: Creating new ~/.zshrc
+    copy:
+      src=~/.oh-my-zsh/templates/zshrc.zsh-template
+      dest=~/.zshrc
+    when: cloning|success
+    become: no
+
+  # install spotify
+  # install docker 
