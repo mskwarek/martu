@@ -1,0 +1,25 @@
+---
+
+- name: 'Install required packaged'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: no
+  vars:
+    packages:
+    - gnupg2
+    - gnupg-agent
+    - dirmngr
+    - cryptsetup
+    - scdaemon
+    - pcscd
+    - secure-delete
+    - hopenpgp-tools
+    - yubikey-personalization
+    become: yes
+
+- name: 'Get GPG config file'
+  get_url:
+    url: 'https://raw.githubusercontent.com/drduh/config/master/gpg-agent.conf'
+    dest: ~/.gnupg/gpg-agent.conf
+

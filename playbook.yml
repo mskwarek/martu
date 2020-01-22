@@ -2,6 +2,7 @@
 - hosts: all
   roles:
     - spacemacs
+    - yubikey
   tasks:
 
   # - apt_key:
@@ -18,7 +19,6 @@
     vars:
       packages:
       - vim
-      - emacs
       - thunderbird
       - htop
       - stress
@@ -53,22 +53,8 @@
       - pass
       - docker
       - docker-compose
-      - gnupg2
-      - gnupg-agent
-      - dirmngr
-      - cryptsetup
-      - scdaemon
-      - pcscd
-      - secure-delete
-      - hopenpgp-tools
-      - yubikey-personalization
     become: yes
-
     
-  - name: 'Get GPG config file'
-    get_url:
-      url: 'https://raw.githubusercontent.com/drduh/config/master/gpg-agent.conf'
-      dest: ~/.gnupg/gpg-agent.conf
 
   #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4773BD5E130D1D45
   #echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
