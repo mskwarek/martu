@@ -3,7 +3,7 @@ Here you can find some scripts that makes my working environments consistent.
 
 ## Run
 
-To provision your machinem run:
+For now supported OS is Debian 10. To provision your machinem run:
 
 `ansible-playbook -u <user> -i hosts -K playbook.yml --ask-vault-pass`
 
