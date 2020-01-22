@@ -1,0 +1,27 @@
+---
+
+- name: 'Install emacs package'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: no
+  vars:
+    packages:
+    - emacs
+  become: yes
+
+- name: 'Clone spacemacs repository'
+  git:
+    repo: 'https://github.com/syl20bnr/spacemacs'
+    dest: '~/.emacs.d'
+    version: '26b8fe0c317915b622825877eb5e5bdae88fb2b2'
+
+- name: 'Reload spacemacs configuration'
+  shell: emacs --batch -l ~/.emacs.d/init.el --eval="(configuration-layer/update-packages t)"
+
+- name: 'Ensure Elpa key is present in keyring'
+  apt_key:
+    state: present
+    id: 066DAFCB81E42C40
+    keyserver: keyserver.ubuntu.com
+    keyring: ~/.emacs.d/elpa/gnupg
