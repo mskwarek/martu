@@ -25,3 +25,15 @@
     id: 066DAFCB81E42C40
     keyserver: keyserver.ubuntu.com
     keyring: ~/.emacs.d/elpa/gnupg
+
+- name: 'Install emacs mu4e packages'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: no
+  vars:
+    packages:
+      - isync
+      - mu4e
+  become: yes
+  

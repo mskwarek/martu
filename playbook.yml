@@ -3,6 +3,7 @@
   roles:
     - spacemacs
     - yubikey
+    - ssh
   tasks:
 
   # - apt_key:
@@ -43,20 +44,17 @@
       - vlc
       - lxterminal
       - git
-      - isync
-      - evince
-      - mu4e
-      - libreoffice
       - borgbackup
       # - spotify-client
       - pdfsam
+      - libreoffice
+      - evince
       - pass
       - docker
       - docker-compose
     become: yes
-    
 
-  #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4773BD5E130D1D45
+    #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4773BD5E130D1D45
   #echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
 
   # install spotify

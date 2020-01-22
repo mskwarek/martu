@@ -1,0 +1,12 @@
+---
+
+- include_vars:
+    file: hosts.yml
+
+- blockinfile:
+    dest: ~/.ssh/config
+    block: "{{ lookup('template', 'config.j2') }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR {{ item.host }}"
+    create: yes
+    mode: 0644
+  with_items: "{{ ssh_hosts }}"
