@@ -3,56 +3,16 @@
   roles:
     - spacemacs
     - yubikey
+    - dev
+    - where_is_my_env
     - ssh
-  tasks:
+  # tasks:
 
   # - apt_key:
   #     state: present
   #     id: 4773BD5E130D1D45
   #     keyserver: subkeys.pgp.net
   #   become: yes
-
-  - name: Install a list of packages
-    apt:
-      name: "{{ packages }}"
-      state: present
-      install_recommends: no
-    vars:
-      packages:
-      - vim
-      - thunderbird
-      - htop
-      - stress
-      - gcc
-      - g++
-      - make
-      - cmake
-      - python3
-      - python3-pip
-      - python3-dev
-      - ipython3
-      - ethtool
-      - i3
-      - slim
-      - xorg
-      - firefox-esr
-      - tmux
-      - pulseaudio
-      - pavucontrol
-      - thunar
-      - qnapi
-      - vlc
-      - lxterminal
-      - git
-      - borgbackup
-      # - spotify-client
-      - pdfsam
-      - libreoffice
-      - evince
-      - pass
-      - docker
-      - docker-compose
-    become: yes
 
     #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4773BD5E130D1D45
   #echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list

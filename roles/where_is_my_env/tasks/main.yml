@@ -1,0 +1,25 @@
+---
+
+- name: 'Install a list of packages'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: no
+  vars:
+    packages:
+    - i3
+    - slim
+    - xorg
+    - thunderbird
+    - firefox-esr
+    - pulseaudio
+    - pavucontrol
+    - thunar
+    - qnapi
+    - vlc
+    - pdfsam
+    - libreoffice
+    - evince
+    - lxterminal
+    # - spotify-client
+  become: yes
