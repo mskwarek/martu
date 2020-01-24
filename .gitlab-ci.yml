@@ -8,6 +8,7 @@ include:
   template: Dependency-Scanning.gitlab-ci.yml
 
 dependency_scanning:
+  stage: .post
   variables:
     CI_DEBUG_TRACE: "true"
 
