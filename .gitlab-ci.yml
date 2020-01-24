@@ -4,14 +4,6 @@ before_script:
   - pip install ansible-lint
   - ansible-lint --version
 
-include:
-  template: Dependency-Scanning.gitlab-ci.yml
-
-dependency_scanning:
-  stage: .post
-  variables:
-    CI_DEBUG_TRACE: "true"
-
 stages:
   - ansible-lint
 
