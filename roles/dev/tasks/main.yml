@@ -24,4 +24,5 @@
     - pass
     - stress
     - ethtool
+    - ca-certificates
   become: yes

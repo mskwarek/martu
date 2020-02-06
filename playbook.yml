@@ -2,20 +2,14 @@
 - hosts: all
   roles:
     - spacemacs
-    - yubikey
     - dev
-    - where_is_my_env
+    - { role: hardening, become: yes }
+    
+- hosts: ssh_terminals
+  roles:
+    - yubikey
     - ssh
-  # tasks:
 
-  # - apt_key:
-  #     state: present
-  #     id: 4773BD5E130D1D45
-  #     keyserver: subkeys.pgp.net
-  #   become: yes
-
-    #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4773BD5E130D1D45
-  #echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
-
-  # install spotify
-
+- hosts: gui
+  roles:
+    - { role: where_is_my_env, become: yes }

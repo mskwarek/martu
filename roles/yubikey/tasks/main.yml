@@ -16,10 +16,23 @@
     - secure-delete
     - hopenpgp-tools
     - yubikey-personalization
-    become: yes
+  become: yes
+
+- name: 'Init gpg home directory'
+  shell: gpg -K
 
 - name: 'Get GPG config file'
   get_url:
     url: 'https://raw.githubusercontent.com/drduh/config/master/gpg-agent.conf'
     dest: ~/.gnupg/gpg-agent.conf
 
+- name: 'Copy gpg-ssh-agent configuration'
+  copy:
+    src: yubikey
+    dest: ~/.config/yubikey
+
+- name: 'Import yubikey configuration in .bashrc'
+  lineinfile:
+    path: ~/.bashrc
+    line: 'source ~/.config/yubikey'
+    create: yes

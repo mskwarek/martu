@@ -1,0 +1,19 @@
+---
+
+- name: 'Set permissions on GRUB configuration'
+  file:
+    path: /boot/grub/grub.cfg
+    owner: root
+    group: root
+    mode: og-rwx
+
+- name: 'Set permissions on /etc/* config files'
+  file:
+    path: "{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - /etc/issue
+    - /etc/motd
+    - /etc/issue.net

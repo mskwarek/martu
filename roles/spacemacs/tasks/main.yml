@@ -8,6 +8,8 @@
   vars:
     packages:
     - emacs
+    - git
+    - ca-certificates
   become: yes
 
 - name: 'Clone spacemacs repository'
@@ -15,6 +17,13 @@
     repo: 'https://github.com/syl20bnr/spacemacs'
     dest: '~/.emacs.d'
     version: '26b8fe0c317915b622825877eb5e5bdae88fb2b2'
+
+- name: 'Create .spacemacs config'
+  copy:
+    src: .spacemacs
+    dest: ~/.spacemacs
+    mode: '0660'
+
 
 - name: 'Reload spacemacs configuration'
   shell: emacs --batch -l ~/.emacs.d/init.el --eval="(configuration-layer/update-packages t)"

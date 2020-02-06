@@ -1,13 +1,33 @@
 ---
 
+- apt_key:
+    state: present
+    id: 4773BD5E130D1D45
+    keyserver: keyserver.ubuntu.com
+- apt_repository:
+    repo: "{{ item }}"
+    state: present
+  loop:
+    - deb http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free
+    - deb-src http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free
+    - deb http://deb.debian.org/debian-security/ {{ ansible_distribution_release }}/updates main contrib non-free
+    - deb-src http://deb.debian.org/debian-security/ {{ ansible_distribution_release }}/updates main contrib non-free
+    - deb http://deb.debian.org/debian {{ ansible_distribution_release }}-updates maincontrib non-free
+    - deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main contrib non-free
+- apt_repository:
+    repo: deb http://repository.spotify.com stable non-free
+    state: present
+    filename: spotify
 - name: 'Install a list of packages'
   apt:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
     install_recommends: no
-  vars:
-    packages:
+  loop:
     - i3
+    - i3lock
+    - i3status
+    - dmenu
     - slim
     - xorg
     - thunderbird
@@ -15,11 +35,11 @@
     - pulseaudio
     - pavucontrol
     - thunar
+    - arandr
     - qnapi
     - vlc
     - pdfsam
-    - libreoffice
+    # - libreoffice
     - evince
     - lxterminal
-    # - spotify-client
-  become: yes
+    - spotify-client
