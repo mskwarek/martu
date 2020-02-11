@@ -26,3 +26,9 @@
     - ethtool
     - ca-certificates
   become: yes
+
+- name: 'Create some common directories'
+  file:
+    path: ~/_projects
+    state: directory
+    mode: 0755

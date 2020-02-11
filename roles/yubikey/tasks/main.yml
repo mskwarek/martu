@@ -2,11 +2,10 @@
 
 - name: 'Install required packaged'
   apt:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
     install_recommends: no
-  vars:
-    packages:
+  loop:
     - gnupg2
     - gnupg-agent
     - dirmngr
@@ -21,9 +20,9 @@
 - name: 'Init gpg home directory'
   shell: gpg -K
 
-- name: 'Get GPG config file'
-  get_url:
-    url: 'https://raw.githubusercontent.com/drduh/config/master/gpg-agent.conf'
+- name: 'Copy GPG config file'
+  copy:
+    src: gpg-agent.conf
     dest: ~/.gnupg/gpg-agent.conf
 
 - name: 'Copy gpg-ssh-agent configuration'

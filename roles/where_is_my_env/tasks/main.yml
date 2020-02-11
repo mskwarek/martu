@@ -1,23 +1,28 @@
 ---
 
-- apt_key:
+- name: 'Add basic repositories to /etc/sources.list'
+  lineinfile:
+    line: "{{ item }}"
+    state: present
+    path: /etc/apt/sources.list
+  loop:
+    - deb http://deb.debian.org/debian {{ ansible_lsb.codename }} main contrib non-free
+    - deb-src http://deb.debian.org/debian {{ ansible_lsb.codename }} main contrib non-free
+    - deb http://security.debian.org/debian-security/ {{ ansible_lsb.codename }}-security main contrib non-free
+    - deb-src http://security.debian.org/debian-security/ {{ ansible_lsb.codename }}-security main contrib non-free
+
+- name: 'Add apt key for spotify'
+  apt_key:
     state: present
     id: 4773BD5E130D1D45
     keyserver: keyserver.ubuntu.com
-- apt_repository:
-    repo: "{{ item }}"
-    state: present
-  loop:
-    - deb http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free
-    - deb-src http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free
-    - deb http://deb.debian.org/debian-security/ {{ ansible_distribution_release }}/updates main contrib non-free
-    - deb-src http://deb.debian.org/debian-security/ {{ ansible_distribution_release }}/updates main contrib non-free
-    - deb http://deb.debian.org/debian {{ ansible_distribution_release }}-updates maincontrib non-free
-    - deb-src http://deb.debian.org/debian {{ ansible_distribution_release }}-updates main contrib non-free
-- apt_repository:
+
+- name: 'Add repository for spotify'
+  apt_repository:
     repo: deb http://repository.spotify.com stable non-free
     state: present
     filename: spotify
+
 - name: 'Install a list of packages'
   apt:
     name: "{{ item }}"
@@ -39,7 +44,6 @@
     - qnapi
     - vlc
     - pdfsam
-    # - libreoffice
     - evince
     - lxterminal
     - spotify-client
