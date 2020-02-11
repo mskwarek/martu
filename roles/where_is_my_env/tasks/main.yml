@@ -49,6 +49,4 @@
     - spotify-client
     - pass
     - ansible
-
-- name: 'Clone pass repository'
-  shell: pass git clone https://gitlab.com/mskwarek/pass.git
+    - xclip

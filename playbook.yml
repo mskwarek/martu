@@ -5,11 +5,12 @@
 #   - dev
 #   - { role: hardening, become: yes }
     
-# hosts: ssh_terminals
-# roles:
-#   - yubikey
-#   - ssh
+- hosts: ssh_terminals
+  roles:
+    - yubikey
+    - ssh
 
 - hosts: gui
   roles:
     - { role: where_is_my_env, become: yes }
+    - config

@@ -1,5 +1,13 @@
 Host {{ item.host }}
-     HostName {{ item.hostname }}
-     User {{ item.user }}
-     Port {{ item.port }}
-     IdentityFile {{ item.identity_file }}
+{% if item.hostname is defined %}
+  HostName {{ item.hostname }}
+{% endif %}
+{% if item.user is defined %}
+  User {{ item.user }}
+{% endif %}
+{% if item.port is defined %}
+  Port {{ item.port }}
+{% endif %}
+{% if item.identity_file is defined %}
+  IdentityFile {{ item.identity_file }}
+{% endif %}
