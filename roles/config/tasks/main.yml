@@ -1,0 +1,7 @@
+---
+
+- name: 'Clone pass repository'
+  git:
+    repo: git@gitlab.com:mskwarek/pass.git
+    version: master
+    dest: ~/.password-store
