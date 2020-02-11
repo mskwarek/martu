@@ -1,14 +1,14 @@
 ---
-- hosts: all
-  roles:
-    - spacemacs
-    - dev
-    - { role: hardening, become: yes }
+# hosts: all
+# roles:
+#   - spacemacs
+#   - dev
+#   - { role: hardening, become: yes }
     
-- hosts: ssh_terminals
-  roles:
-    - yubikey
-    - ssh
+# hosts: ssh_terminals
+# roles:
+#   - yubikey
+#   - ssh
 
 - hosts: gui
   roles:
