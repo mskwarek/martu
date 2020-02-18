@@ -14,12 +14,28 @@ where passphrase to decrypt `hosts.yml` file is stored.
 
 ```console
 .
+├── .gitlab-ci.yml
+├── hosts
 ├── playbook.yml
+├── README.md
 └── roles
+    ├── config
+    │   ├── default
+    │   │   └── mails.yml
+    │   ├── mails.yml
+    │   ├── tasks
+    │   │   └── main.yml
+    │   └── templates
+    │       └── settings.org.j2
     ├── dev
     │   └── tasks
     │       └── main.yml
+    ├── hardening
+    │   └── tasks
+    │       └── main.yml
     ├── spacemacs
+    │   ├── files
+    │   │   └── .spacemacs
     │   └── tasks
     │       └── main.yml
     ├── ssh
@@ -34,6 +50,9 @@ where passphrase to decrypt `hosts.yml` file is stored.
     │   └── tasks
     │       └── main.yml
     └── yubikey
+        ├── files
+        │   ├── gpg-agent.conf
+        │   └── yubikey
         └── tasks
             └── main.yml
 ```
@@ -51,8 +70,10 @@ There are several roles which I consider useful:
 
 ### SSH connection
 
-The `hosts.yml` file is encrypted using *ansible-vault*. To present file
-stucture, the `roles/ssh/defaults/hosts.yml` file was added.
+The `hosts.yml` and `mails.yml` files are encrypted using *ansible-vault*. To
+present file stucture, the following files were added:
+- `roles/ssh/defaults/hosts.yml`
+- `roles/config/default/mails.yml`
 
-To decrypt `hosts.yml` file run: `ansible-vault decrypt roles/ssh/hosts.yml`
-To encrypt `hosts.yml` file run: `ansible-vault encrypt roles/ssh/hosts.yml`
+To decrypt `<encrypted>.yml` file run: `ansible-vault decrypt <path>.yml`
+To encrypt `<decrypted>.yml` file run: `ansible-vault encrypt <path>.yml`
