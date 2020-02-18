@@ -25,6 +25,10 @@
     - stress
     - ethtool
     - ca-certificates
+    - wireshark
+    - dnsutils
+    - curl
+    - silversearcher-ag
   become: yes
 
 - name: 'Create some common directories'

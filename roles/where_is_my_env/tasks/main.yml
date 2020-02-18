@@ -50,3 +50,7 @@
     - pass
     - ansible
     - xclip
+    - libreoffice-calc
+    - cryptsetup
+    - rsync
+    - tcpdump
