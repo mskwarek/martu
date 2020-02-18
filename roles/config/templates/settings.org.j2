@@ -1,0 +1,184 @@
+* Example
+** Legder config
+#+BEGIN_SRC emacs-lisp
+(defun dotspacemacs/user-config ()
+  (setq ledger-post-amount-alignment-column 68))
+#+END_SRC
+
+** Mail config
+*** Maildir
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-mime)
+
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e/")
+(require 'mu4e)
+
+(setq mu4e-maildir (expand-file-name "~/Maildir"))
+#+END_SRC
+
+*** Get mails
+#+BEGIN_SRC emacs-lisp
+(setq mu4e-get-mail-command "mbsync -c {{ mbsyncrcpath }} -a"
+  ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
+  mu4e-view-prefer-html t
+  mu4e-update-interval 180
+  mu4e-headers-auto-update t
+  mu4e-compose-signature-auto-include nil
+  mu4e-compose-format-flowed t)
+#+END_SRC
+
+*** to view selected message in the browser, no signin, just html mail
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'mu4e-view-actions
+  '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+#+END_SRC
+*** enable inline images
+#+BEGIN_SRC emacs-lisp
+(setq mu4e-view-show-images t)
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
+#+END_SRC
+*** every new email composition gets its own frame!
+#+BEGIN_SRC emacs-lisp
+(setq mu4e-compose-in-new-frame t)
+#+END_SRC
+*** don't save message to Sent Messages, IMAP takes care of this
+#+BEGIN_SRC emacs-lisp
+(setq mu4e-sent-messages-behavior 'delete)
+
+(add-hook 'mu4e-view-mode-hook #'visual-line-mode)
+#+END_SRC
+*** <tab> to navigate to links, <RET> to open them in browser
+#+BEGIN_SRC emacs-lisp
+(add-hook 'mu4e-view-mode-hook
+  (lambda()
+;; try to emulate some of the eww key-bindings
+(local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
+(local-set-key (kbd "<tab>") 'shr-next-link)
+(local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
+;; from https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/elgoumx
+(add-hook 'mu4e-headers-mode-hook
+      (defun my/mu4e-change-headers ()
+	(interactive)
+	(setq mu4e-headers-fields
+	      `((:human-date . 25) ;; alternatively, use :date
+		(:flags . 6)
+		(:from . 22)
+		(:thread-subject . ,(- (window-body-width) 70)) ;; alternatively, use :subject
+		(:size . 7)))))
+
+;; if you use date instead of human-date in the above, use this setting
+;; give me ISO(ish) format date-time stamps in the header list
+;(setq mu4e-headers-date-format "%Y-%m-%d %H:%M")
+#+END_SRC
+
+*** Spell check
+#+BEGIN_SRC emacs-lisp
+;; spell check
+(add-hook 'mu4e-compose-mode-hook
+    (defun my-do-compose-stuff ()
+       "My settings for message composition."
+       (visual-line-mode)
+       (org-mu4e-compose-org-mode)
+           (use-hard-newlines -1)
+       (flyspell-mode)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(require 'smtpmail)
+
+;;rename files when moving
+;;NEEDED FOR MBSYNC
+(setq mu4e-change-filenames-when-moving t)
+
+;;set up queue for offline email
+;;use mu mkdir  ~/Maildir/acc/queue to set up first
+(setq smtpmail-queue-mail nil)  ;; start in normal mode
+
+;;from the info manual
+(setq mu4e-attachment-dir  "~/Downloads")
+
+(setq message-kill-buffer-on-exit t)
+(setq mu4e-compose-dont-reply-to-self t)
+
+(require 'org-mu4e)
+
+;; convert org mode to HTML automatically
+(setq org-mu4e-convert-to-html t)
+
+;;from vxlabs config
+;; show full addresses in view message (instead of just names)
+;; toggle per name with M-RET
+(setq mu4e-view-show-addresses 't)
+
+;; don't ask when quitting
+(setq mu4e-confirm-quit nil)
+
+;; mu4e-context
+(setq mu4e-context-policy 'pick-first)
+(setq mu4e-compose-context-policy 'always-ask)
+(setq mu4e-contexts
+  (list
+{% for account in list_accounts %}
+   (make-mu4e-context
+    :name "{{ account.name }}"
+    :enter-func (lambda () (mu4e-message "Entering context work"))
+    :leave-func (lambda () (mu4e-message "Leaving context work"))
+    :match-func (lambda (msg)
+		  (when msg
+		(mu4e-message-contact-field-matches
+		 msg '(:from :to :cc :bcc) "{{ account.full_email }}")))
+    :vars '((user-mail-address . "{{ account.full_email }}")
+	    (user-full-name . "{{ account.full_name }}")
+	    (mu4e-sent-folder . "/{{ account.name }}/[{{ account.short_name }}].Sent")
+	    (mu4e-drafts-folder . "/{{ account.name }}/[{{ account.short_name }}].drafts")
+	    (mu4e-trash-folder . "/{{ account.name }}/[{{ account.short_name }}].Trash")
+	    (mu4e-compose-signature . (concat "Formal Signature\n" "Emacs 25, org-mode 9, mu4e 1.0\n"))
+	    (mu4e-compose-format-flowed . t)
+	    (smtpmail-queue-dir . "~/Maildir/{{ account.name }}/queue/cur")
+	    (message-send-mail-function . smtpmail-send-it)
+	    (smtpmail-smtp-user . "{{ account.short_name }}")
+	    (smtpmail-starttls-credentials . (("{{ account.smtp_addr }}" {{ account.smtp_port }} nil nil)))
+	    (smtpmail-auth-credentials . (expand-file-name "{{ account.password_path }}"))
+	    (smtpmail-default-smtp-server . "{{ account.smtp_addr }}")
+	    (smtpmail-smtp-server . "{{ account.smtp_addr }}")
+	    (smtpmail-smtp-service . {{ account.smtp_port }})
+	    (smtpmail-debug-info . t)
+	    (smtpmail-debug-verbose . t)
+	    (mu4e-maildir-shortcuts . ( ("/{{ account.name }}/INBOX"            . ?i)
+					("/{{ account.name }}/[{{ account.short_name }}].Sent" . ?s)
+					("/{{ account.name }}/[{{ account.short_name }}].Trash"       . ?t)
+					("/{{ account.name }}/[{{ account.short_name }}].All Mail"  . ?a)
+					("/{{ account.name }}/[{{ account.short_name }}].Starred"   . ?r)
+					("/{{ account.name }}/[{{ account.short_name }}].drafts"    . ?d)
+	        ))))
+{% endfor %}
+))
+#+END_SRC
+*** Sign/encrypt messages
+#+BEGIN_SRC emacs-lisp
+(setf mu4e-compose-crypto-reply-encrypted-policy 'sign-and-encrypt)
+(setf mu4e-compose-crypto-reply-plain-policy 'sign)
+#+END_SRC
+
+*** email signatures
+#+BEGIN_SRC emacs-lisp
+  (defun my-mu4e-choose-signature ()
+    "Insert one of a number of sigs"
+    (interactive)
+    (let ((message-signature
+            (mu4e-read-option "Signature:"
+              '(("formal" .
+                (concat
+             "{{ formal_signature }}\n"))
+                 ("informal" .
+                "{{ informal_signature }}\n")))))
+      (message-insert-signature)))
+
+  ;; (add-hook 'mu4e-compose-mode-hook
+  ;;           (lambda () (local-set-key (kbd "C-c C-w") #'my-mu4e-choose-signature)))
+#+END_SRC
+

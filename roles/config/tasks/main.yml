@@ -5,3 +5,12 @@
     repo: git@gitlab.com:mskwarek/pass.git
     version: master
     dest: ~/.password-store
+
+- include_vars:
+    file: mails.yml
+
+- name: 'Generate emacs settings'
+  template:
+    src: settings.org.j2
+    dest: /tmp/settings.org
+    mode: '0644'
