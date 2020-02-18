@@ -8,7 +8,7 @@
     packages:
     - vim
     - tmux
-    - docker
+    - docker.io
     - docker-compose
     - git
     - htop
