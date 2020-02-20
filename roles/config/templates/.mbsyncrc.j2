@@ -1,0 +1,86 @@
+# mbsyncrc based on
+# http://www.ict4g.net/adolfo/notes/2014/12/27/EmacsIMAP.html
+# ACCOUNT INFORMATION
+IMAPAccount {{ account.name }}
+# Address to connect to
+Host {{ account.imap_addr }}
+User {{ account.full_email }}
+PassCmd "gpg --quiet --for-your-eyes-only --decrypt {{ account.password_path }}"
+AuthMechs LOGIN
+SSLType IMAPS
+SSLVersions TLSv1.2
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+# THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
+# - THE REMOTE STORAGE IS WHERE WE GET THE MAIL FROM (E.G., THE
+#   SPECIFICATION OF AN IMAP ACCOUNT)
+# - THE LOCAL STORAGE IS WHERE WE STORE THE EMAIL ON OUR COMPUTER
+
+# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+IMAPStore {{ account.name }}-remote
+Account {{ account.name }}
+
+# LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p ~/Maildir/{{ account.name }})
+MaildirStore {{ account.name }}-local
+Path ~/Maildir/{{ account.name }}/
+Inbox ~/Maildir/{{ account.name }}/INBOX
+# REQUIRED ONLY IF YOU WANT TO DOWNLOAD ALL SUBFOLDERS; SYNCING SLOWS DOWN
+# SubFolders Verbatim
+
+# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
+#
+# CONNECTIONS ARE SPECIFIED USING PATTERNS, WHICH MATCH REMOTE MAIl
+# FOLDERS. SOME COMMONLY USED PATTERS INCLUDE:
+#
+# 1 "*" TO MATCH EVERYTHING
+# 2 "!DIR" TO EXCLUDE "DIR"
+# 3 "DIR" TO MATCH DIR
+
+Channel {{ account.name }}-inbox
+Master :{{ account.name }}-remote:
+Slave :{{ account.name }}-local:
+Patterns "INBOX"
+Create Both
+Expunge Both
+SyncState *
+
+Channel {{ account.name }}-trash
+Master :{{ account.name}}-remote:"[{{ account.name }}]/Trash"
+Slave :{{ account.name }}-local:"[{{ account.name }}].Trash"
+Create Both
+Expunge Both
+SyncState *
+
+Channel {{ account.name }}-sent
+Master :{{ account.name }}-remote:"[{{ account.name }}]/Sent"
+Slave :{{ account.name }}-local:"[{{ account.name }}].Sent"
+Create Both
+Expunge Both
+SyncState *
+
+Channel {{ account.name }}-all
+Master :{{ account.name }}-remote:"[{{ account.name }}]/All Mail"
+Slave :{{ account.name }}-local:"[{{ account.name }}].All Mail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel {{ account.name }}-starred
+Master :{{ account.name }}-remote:"[{{ account.name }}]/Starred"
+Slave :{{ account.name }}-local:"[{{ account.name }}].Starred"
+Create Both
+Expunge Both
+SyncState *
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync {{ account.name }}" GETS MAIL FROM
+# "{{ account.name }}-inbox", "{{ account.name }}-sent", and "{{ account.name }}-trash"
+#
+Group {{ account.name }}
+Channel {{ account.name }}-inbox
+Channel {{ account.name }}-sent
+Channel {{ account.name }}-trash
+Channel {{ account.name }}-all
+Channel {{ account.name }}-starred

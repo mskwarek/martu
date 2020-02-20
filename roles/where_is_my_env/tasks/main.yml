@@ -54,3 +54,12 @@
     - cryptsetup
     - rsync
     - tcpdump
+    - torbrowser-launcher
+    # for kernel building
+    - build-essential
+    - libncurses-dev
+    - bison
+    - flex
+    - libssl-dev
+    - libelf-dev
+    - bc

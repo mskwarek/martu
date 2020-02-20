@@ -1,0 +1,13 @@
+---
+
+formal_signature: 'John Doe'
+informal_signature: 'JD'
+mbsyncrcpath: '~/.config/mbsync/.mbsyncrc'
+list_accounts:
+  - name: 'gmail'
+    full_email: 'john.doe@gmail.com'
+    full_name: 'John Doe'
+    short_name: 'john.doe'
+    smtp_addr: 'smtp.gmail.com'
+    smtp_port: 587
+    password_path: "~/.config/mbsync/gmail.gpg"
