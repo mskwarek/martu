@@ -15,6 +15,7 @@
     - secure-delete
     - hopenpgp-tools
     - yubikey-personalization
+    - pinentry-qt
   become: yes
 
 - name: 'Init gpg home directory'

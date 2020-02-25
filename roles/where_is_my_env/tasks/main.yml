@@ -63,3 +63,5 @@
     - libssl-dev
     - libelf-dev
     - bc
+    # DNS over TLS
+    - stubby

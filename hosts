@@ -1,4 +1,9 @@
+[all]
+localhost
+
 [gui]
 localhost
+
 [ssh_terminals]
-129.88.52.211
+localhost
+
