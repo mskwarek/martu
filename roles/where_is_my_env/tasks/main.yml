@@ -75,3 +75,9 @@
 - name: 'Include brave tasks'
   become: true
   include: brave.yml
+
+- name: 'Replace every DHCP-based DNS with localhost's stubby'
+  lineinfile:
+    line: supersede domain-name-servers 127.0.0.1;
+    state: present
+    path: /etc/dhcp/dhclient.conf
