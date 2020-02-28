@@ -1,16 +1,15 @@
 ---
 - hosts: all
   roles:
-    - spacemacs
-    - dev
-    - { role: hardening, become: yes }
-    
+    - { role: spacemacs, tags: [ basic ] }
+    - { role: dev, tags: [ basic ] }
+    - { role: hardening, tags: [ basic ] }
+    - { role: yubikey, tags: [ ssh ] }
+    - { role: ssh, tags: [ ssh ] }
+    - { role: where_is_my_env, tags: [ gui ] }
+    - { role: config, tags: [ gui ] }
+
 - hosts: ssh_terminals
   roles:
     - yubikey
     - ssh
-
-- hosts: gui
-  roles:
-    - { role: where_is_my_env, become: yes }
-    - config

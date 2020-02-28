@@ -1,6 +1,8 @@
 ---
 
+
 - name: 'Set permissions on GRUB configuration'
+  become: true
   file:
     path: /boot/grub/grub.cfg
     owner: root
@@ -8,6 +10,7 @@
     mode: og-rwx
 
 - name: 'Set permissions on /etc/* config files'
+  become: true
   file:
     path: "{{ item }}"
     owner: root

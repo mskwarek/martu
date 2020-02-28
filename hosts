@@ -1,9 +1,6 @@
 [all]
 localhost
 
-[gui]
-localhost
-
 [ssh_terminals]
 localhost
 
