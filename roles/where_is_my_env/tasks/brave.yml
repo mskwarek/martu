@@ -1,0 +1,25 @@
+---
+
+- name: 'Add brave repository key'
+  become: true
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    state: present
+    id: A8580BDC82D3DC6C
+
+- name: 'Add brave repository'
+  become: true
+  apt_repository:
+    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com {{ansible_lsb.codename}} main
+    state: present
+    filename: brave
+
+- name: 'Install brave'
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: latest
+    install_recommends: no
+  loop:
+    - brave-browser
+    - brave-keyring

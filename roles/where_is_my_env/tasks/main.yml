@@ -36,7 +36,6 @@
     - slim
     - xorg
     - thunderbird
-    - firefox-esr
     - pulseaudio
     - pavucontrol
     - thunar
@@ -65,3 +64,6 @@
     - bc
     # DNS over TLS
     - stubby
+
+- name: 'Include brave tasks'
+  include: brave.yml
