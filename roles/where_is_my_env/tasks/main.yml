@@ -66,8 +66,11 @@
     - libssl-dev
     - libelf-dev
     - bc
+    - texinfo
+    - gawk
     # DNS over TLS
     - stubby
+    - lm-sensors
 
 - name: 'Include brave tasks'
   become: true

@@ -1,6 +1,5 @@
 ---
 
-
 - name: 'Set permissions on GRUB configuration'
   become: true
   file:
