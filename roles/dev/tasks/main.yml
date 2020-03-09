@@ -29,6 +29,7 @@
     - dnsutils
     - curl
     - silversearcher-ag
+    - jq
   become: yes
 
 - name: 'Create some common directories'
@@ -36,3 +37,8 @@
     path: ~/_projects
     state: directory
     mode: 0755
+
+- name: 'Install python packages'
+  pip:
+    name: yapf
+  become: yes
