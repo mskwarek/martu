@@ -30,6 +30,8 @@
     - curl
     - silversearcher-ag
     - jq
+    # formatter
+    - clang-format
   become: yes
 
 - name: 'Create some common directories'
