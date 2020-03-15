@@ -1,0 +1,20 @@
+---
+
+- name: 'Create i3 config'
+  copy:
+    src: i3-config
+    dest: ~/.config/i3/config
+    mode: '0660'
+
+- name: 'Create lxterminal config'
+  copy:
+    src: lxterminal-config
+    dest: ~/.config/lxterminal/lxterminal.conf
+    mode: '0660'
+
+- name: 'Create tmux config'
+  copy:
+    src: tmux-config
+    dest: ~/.tmux.conf
+    mode: '0660'
+

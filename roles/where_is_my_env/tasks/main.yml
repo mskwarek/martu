@@ -85,8 +85,13 @@
   become: true
   include: brave.yml
 
-- name: 'Replace every DHCP-based DNS with localhost''s stubby'
-  lineinfile:
-    line: supersede domain-name-servers 127.0.0.1;
-    state: present
-    path: /etc/dhcp/dhclient.conf
+- name: 'Include i3 tasks'
+  become: true
+  include: i3.yml
+
+# It's not a good idea when you're using dockerized env
+# - name: 'Replace every DHCP-based DNS with localhost''s stubby'
+#   lineinfile:
+#     line: supersede domain-name-servers 127.0.0.1;
+#     state: present
+#     path: /etc/dhcp/dhclient.conf
