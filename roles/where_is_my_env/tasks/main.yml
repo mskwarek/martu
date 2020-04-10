@@ -57,7 +57,7 @@
     - cryptsetup
     - rsync
     - tcpdump
-    - torbrowser-launcher
+    # - torbrowser-launcher
     # for kernel building
     - build-essential
     - libncurses-dev
@@ -86,7 +86,6 @@
   include: brave.yml
 
 - name: 'Include i3 tasks'
-  become: true
   include: i3.yml
 
 # It's not a good idea when you're using dockerized env

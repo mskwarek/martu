@@ -33,7 +33,7 @@
     state: present
     id: 066DAFCB81E42C40
     keyserver: keyserver.ubuntu.com
-    keyring: ~/.emacs.d/elpa/gnupg
+    keyring: ~/.emacs.d/elpa/gnupg/pubring.kbx
 
 - name: 'Install emacs mu4e packages'
   apt:

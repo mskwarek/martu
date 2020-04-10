@@ -40,7 +40,6 @@
     state: directory
     mode: 0755
 
-- name: 'Install python packages'
-  pip:
-    name: yapf
-  become: yes
+# - name: 'Install python packages'
+#   pip:
+#     name: yapf

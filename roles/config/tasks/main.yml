@@ -12,5 +12,36 @@
 - name: 'Generate emacs settings'
   template:
     src: settings.org.j2
-    dest: /tmp/settings.org
+    dest: ~/.config/settings.org
     mode: '0644'
+
+- name: Creates directory
+  file:
+    path: ~/.config/mbsync
+    state: directory
+
+- name: 'Generate mbsyncrcs'
+  template:
+    src: .mbsyncrc.j2
+    dest: ~/.config/mbsync/.mbsyncrc
+    mode: '0644'
+
+- name: 'Copy mail realted files'
+  copy:
+    src: "{{ item }}"
+    dest: ~/.config/mbsync/"{{ item }}"
+  loop:
+    - "elka.gpg"
+    - "gmail.gpg"
+    - "live.gpg"
+    - "outlook.gpg"
+    - "yahoo.gpg"
+    - "zoho.gpg"
+
+- name: 'Create Maildir (sub)folders'
+  file:
+    path: ~/Maildir/{{ item.name }}
+    state: directory
+  with_items:
+    - "{{ list_accounts }}"
+

@@ -1,10 +1,11 @@
 # mbsyncrc based on
 # http://www.ict4g.net/adolfo/notes/2014/12/27/EmacsIMAP.html
 # ACCOUNT INFORMATION
+{% for account in list_accounts %}
 IMAPAccount {{ account.name }}
 # Address to connect to
 Host {{ account.imap_addr }}
-User {{ account.full_email }}
+User {{ account.imap_user }}
 PassCmd "gpg --quiet --for-your-eyes-only --decrypt {{ account.password_path }}"
 AuthMechs LOGIN
 SSLType IMAPS
@@ -39,48 +40,30 @@ Inbox ~/Maildir/{{ account.name }}/INBOX
 Channel {{ account.name }}-inbox
 Master :{{ account.name }}-remote:
 Slave :{{ account.name }}-local:
-Patterns "INBOX"
+Patterns "{{ account.inbox_pattern }}"
 Create Both
 Expunge Both
 SyncState *
 
-Channel {{ account.name }}-trash
-Master :{{ account.name}}-remote:"[{{ account.name }}]/Trash"
-Slave :{{ account.name }}-local:"[{{ account.name }}].Trash"
+{% for folder in account.subscribed_folders %}
+Channel {{ account.name }}-{{ folder.name }}
+Master :{{ account.name}}-remote:"{{ folder.remote_name }}"
+Slave :{{ account.name }}-local:"{{ folder.local_name }}"
 Create Both
 Expunge Both
 SyncState *
 
-Channel {{ account.name }}-sent
-Master :{{ account.name }}-remote:"[{{ account.name }}]/Sent"
-Slave :{{ account.name }}-local:"[{{ account.name }}].Sent"
-Create Both
-Expunge Both
-SyncState *
-
-Channel {{ account.name }}-all
-Master :{{ account.name }}-remote:"[{{ account.name }}]/All Mail"
-Slave :{{ account.name }}-local:"[{{ account.name }}].All Mail"
-Create Both
-Expunge Both
-SyncState *
-
-Channel {{ account.name }}-starred
-Master :{{ account.name }}-remote:"[{{ account.name }}]/Starred"
-Slave :{{ account.name }}-local:"[{{ account.name }}].Starred"
-Create Both
-Expunge Both
-SyncState *
+{% endfor %}
 
 # GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
 # MBSYNC ON A GROUP TO SYNC ALL CHANNELS
 #
-# FOR INSTANCE: "mbsync {{ account.name }}" GETS MAIL FROM
-# "{{ account.name }}-inbox", "{{ account.name }}-sent", and "{{ account.name }}-trash"
+# FOR INSTANCE: "mbsync {{ account.name }}" GETS MAIL FROM all group
 #
 Group {{ account.name }}
 Channel {{ account.name }}-inbox
-Channel {{ account.name }}-sent
-Channel {{ account.name }}-trash
-Channel {{ account.name }}-all
-Channel {{ account.name }}-starred
+{% for folder in account.subscribed_folders %}
+Channel {{ account.name }}-{{ folder.name }}
+{% endfor %}
+
+{% endfor %}

@@ -1,5 +1,16 @@
 ---
 
+- name: 'Install additional packages'
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+    install_recommends: no
+  loop:
+    - sysstat
+    - acpi #only for laptops
+
+
 - name: 'Create i3 config'
   copy:
     src: i3-config
@@ -18,3 +29,11 @@
     dest: ~/.tmux.conf
     mode: '0660'
 
+- name: 'Install status bar'
+  pip:
+    name: "{{ item }}"
+    executable: pip3
+  loop:
+    - psutil
+    - netifaces
+    - bumblebee-status
