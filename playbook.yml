@@ -7,7 +7,7 @@
     - { role: yubikey, tags: [ ssh ] }
     - { role: ssh, tags: [ ssh ] }
     - { role: where_is_my_env, tags: [ gui ] }
-    - { role: config, tags: [ gui ] }
+    - { role: config, tags: [ config ] }
 
 - hosts: ssh_terminals
   roles:
