@@ -1,0 +1,53 @@
+---
+- name: 'Install a list of packages'
+  apt:
+    name: "{{ packages }}"
+    state: present
+    install_recommends: no
+  vars:
+    packages:
+    - vim
+    - tmux
+    - htop
+    - borgbackup
+    - pass
+    - stress
+    - ethtool
+    - ca-certificates
+    - dnsutils
+    - curl
+    - silversearcher-ag
+    - jq
+    - cryptsetup
+    - lxterminal
+    - ansible
+    - xclip
+    - rsync
+    - tcpdump
+    - lm-sensors
+    # - torbrowser-launcher
+    # for kernel building
+    - build-essential
+    - libncurses-dev
+    - bison
+    - flex
+    - libssl-dev
+    - libelf-dev
+    - bc
+    - texinfo
+    - gawk
+    # DNS over TLS
+    - stubby
+  become: yes
+
+- name: 'Create lxterminal config'
+  copy:
+    src: lxterminal-config
+    dest: ~/.config/lxterminal/lxterminal.conf
+    mode: '0660'
+
+- name: 'Create tmux config'
+  copy:
+    src: tmux-config
+    dest: ~/.tmux.conf
+    mode: '0660'

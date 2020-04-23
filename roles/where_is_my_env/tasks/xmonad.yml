@@ -1,0 +1,44 @@
+---
+
+- name: 'Install additional packages'
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+    install_recommends: no
+  loop:
+    - xmonad
+    - xmobar
+    - feh
+    
+- name: 'Create xmonad directory'
+  file:
+    path: ~/.xmonad
+    state: directory
+    mode: 0755
+    
+- name: 'Create xmonad /scripts directory'
+  file:
+    path: ~/.xmonad/scripts
+    state: directory
+    mode: 0755
+
+- name: 'Create xmonad config'
+  copy:
+    src: "{{ item  }}".hs
+    dest: ~/.xmonad/"{{ item }}".hs
+    mode: '0644'
+  loop:
+    - xmonad
+    - xmobar
+
+- name: 'Copy scripts'
+  copy:
+    src: scripts/"{{ item }}"
+    dest: ~/.xmonad/scripts/"{{ item }}"
+    mode: '0755'
+  loop:
+    - dmenu-run
+    - init
+    - start
+    

@@ -33,13 +33,9 @@
     state: present
     install_recommends: no
   loop:
-    - i3
-    - i3lock
-    - i3status
     - dmenu
     - slim
     - xorg
-    - thunderbird
     - pulseaudio
     - pavucontrol
     - thunar
@@ -48,29 +44,9 @@
     - vlc
     - pdfsam
     - evince
-    - lxterminal
     - spotify-client
     - pass
-    - ansible
-    - xclip
     - libreoffice-calc
-    - cryptsetup
-    - rsync
-    - tcpdump
-    # - torbrowser-launcher
-    # for kernel building
-    - build-essential
-    - libncurses-dev
-    - bison
-    - flex
-    - libssl-dev
-    - libelf-dev
-    - bc
-    - texinfo
-    - gawk
-    # DNS over TLS
-    - stubby
-    - lm-sensors
     # printers
     - cups
     - cups-client
@@ -80,7 +56,7 @@
     - texlive
     - texlive-latex-extra
     - texlive-plain-generic
-
+  
 - name: 'Include brave tasks'
   become: true
   include: brave.yml
@@ -94,3 +70,7 @@
 #     line: supersede domain-name-servers 127.0.0.1;
 #     state: present
 #     path: /etc/dhcp/dhclient.conf
+
+- name: 'Include xmonad tasks'
+  include: xmonad.yml
+  

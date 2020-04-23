@@ -47,7 +47,7 @@ set-window-option -g window-status-bell-style bg=colour167,fg=colour235 # bg=red
 set-option -g status-left "\
 #[fg=colour7, bg=colour241]#{?client_prefix,#[bg=colour167],} ❐ #S \
 #[fg=colour241, bg=colour237]#{?client_prefix,#[fg=colour167],}#{?window_zoomed_flag, 🔍,} \
-#[fg=colour1] ♥ #(~/dotfiles/tmux_scripts/battery.sh)  "
+#[fg=colour1, bold] λ      "
 
 set-option -g status-right "\
 #[fg=colour214, bg=colour237] \
@@ -70,7 +70,7 @@ set-window-option -g window-status-format "\
 #[fg=colour239, bg=colour237]"
 
 # Set the history limit so we get lots of scrollback.
-setw -g history-limit 50000000
+setw -g history-limit 10000
 
 #############################
 ############# Tmux Vars

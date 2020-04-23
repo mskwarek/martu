@@ -6,12 +6,9 @@
     install_recommends: no
   vars:
     packages:
-    - vim
-    - tmux
     - docker.io
     - docker-compose
     - git
-    - htop
     - gcc
     - g++
     - make
@@ -20,17 +17,8 @@
     - python3-pip
     - python3-dev
     - ipython3
-    - borgbackup
     - pass
-    - stress
-    - ethtool
-    - ca-certificates
     - wireshark
-    - dnsutils
-    - curl
-    - silversearcher-ag
-    - jq
-    # formatter
     - clang-format
   become: yes
 
@@ -40,6 +28,9 @@
     state: directory
     mode: 0755
 
-# - name: 'Install python packages'
-#   pip:
-#     name: yapf
+- name: 'Install python packages'
+  pip:
+    name: "{{ item }}"
+    executable: pip3
+  loop:
+    - yapf

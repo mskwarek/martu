@@ -1,0 +1,6 @@
+#!/bin/sh
+
+#~/.fehbg &
+feh --bg-fill "${HOME}/.config/1.jpg"
+xset r rate 260 25 &
+#setxkbmap -option ctrl:nocaps &

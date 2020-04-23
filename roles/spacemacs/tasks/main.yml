@@ -12,29 +12,6 @@
     - ca-certificates
   become: yes
 
-- name: 'Clone spacemacs repository'
-  git:
-    repo: 'https://github.com/syl20bnr/spacemacs'
-    dest: '~/.emacs.d'
-    version: '26b8fe0c317915b622825877eb5e5bdae88fb2b2'
-
-- name: 'Create .spacemacs config'
-  copy:
-    src: .spacemacs
-    dest: ~/.spacemacs
-    mode: '0660'
-
-
-- name: 'Reload spacemacs configuration'
-  shell: emacs --batch -l ~/.emacs.d/init.el --eval="(configuration-layer/update-packages t)"
-
-- name: 'Ensure Elpa key is present in keyring'
-  apt_key:
-    state: present
-    id: 066DAFCB81E42C40
-    keyserver: keyserver.ubuntu.com
-    keyring: ~/.emacs.d/elpa/gnupg/pubring.kbx
-
 - name: 'Install emacs mu4e packages'
   apt:
     name: "{{ packages }}"
@@ -45,4 +22,7 @@
       - isync
       - mu4e
   become: yes
-  
+
+- name: 'Install spacemacs'
+  include: spacemacs.yml
+
