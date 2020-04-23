@@ -25,6 +25,8 @@
 
 - name: 'Install spacemacs'
   include: spacemacs.yml
+  tags: spacemacs
 
 - name: 'Install doom emacs'
   include: doom_emacs.yml
+  tags: doom_emacs

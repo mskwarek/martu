@@ -1,12 +1,13 @@
 ---
 - hosts: all
   roles:
-    - { role: emacs, tags: [ spacemacs, emacs ] }
+    - { role: terminal }
+    - { role: emacs, tags: [ spacemacs, doom_emacs ] }
     - { role: dev, tags: [ basic ] }
     - { role: hardening, tags: [ basic ] }
     - { role: yubikey, tags: [ ssh ] }
     - { role: ssh, tags: [ ssh ] }
-    - { role: where_is_my_env, tags: [ gui ] }
+    - { role: where_is_my_env, tags: [ xmonad, i3 ] }
     - { role: config, tags: [ config ] }
 
 - hosts: ssh_terminals
