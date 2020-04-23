@@ -1,7 +1,7 @@
 ---
 - hosts: all
   roles:
-    - { role: spacemacs, tags: [ basic ] }
+    - { role: emacs, tags: [ spacemacs, emacs ] }
     - { role: dev, tags: [ basic ] }
     - { role: hardening, tags: [ basic ] }
     - { role: yubikey, tags: [ ssh ] }
