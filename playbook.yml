@@ -3,11 +3,15 @@
   roles:
     - { role: terminal }
     - { role: emacs, tags: [ spacemacs, doom_emacs ] }
+    - { role: spacemacs, tags: [ spacemacs ] }
+    - { role: doom_emacs, tags: [ doom_emacs ] }
     - { role: dev, tags: [ basic ] }
     - { role: hardening, tags: [ basic ] }
     - { role: yubikey, tags: [ ssh ] }
     - { role: ssh, tags: [ ssh ] }
     - { role: where_is_my_env, tags: [ xmonad, i3 ] }
+    - { role: xmonad, tags: [ xmonad ] }
+    - { role: i3, tags: [ i3 ] }
     - { role: config, tags: [ config ] }
 
 - hosts: ssh_terminals

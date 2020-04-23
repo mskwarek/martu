@@ -1,0 +1,20 @@
+---
+
+- name: 'Clone doom repository'
+  git:
+    repo: 'https://github.com/hlissner/doom-emacs'
+    dest: '~/.emacs.d'
+    version: '279ca195d52bbb0ee8fff4bd0d6cab32cb33565d'
+
+- name: 'Install doom'
+  shell: '~/.emacs.d/bin/doom -y install'
+
+- name: 'Copy doom scripts'
+  copy:
+    src: "{{ item }}"
+    dest: "~/.doom.d/{{ item }}"
+    mode: '0644'
+  loop:
+    - config.el
+    - init.el
+    - packages.el

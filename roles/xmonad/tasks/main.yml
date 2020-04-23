@@ -9,6 +9,8 @@
   loop:
     - xmonad
     - xmobar
+    - libghc-xmonad-dev
+    - libghc-xmonad-contrib-dev
     - feh
     
 - name: 'Create xmonad directory'
@@ -25,8 +27,8 @@
 
 - name: 'Create xmonad config'
   copy:
-    src: "{{ item  }}".hs
-    dest: ~/.xmonad/"{{ item }}".hs
+    src: "{{ item  }}.hs"
+    dest: "~/.xmonad/{{ item }}.hs"
     mode: '0644'
   loop:
     - xmonad
@@ -34,8 +36,8 @@
 
 - name: 'Copy scripts'
   copy:
-    src: scripts/"{{ item }}"
-    dest: ~/.xmonad/scripts/"{{ item }}"
+    src: "{{ item }}"
+    dest: "~/.xmonad/scripts/{{ item }}"
     mode: '0755'
   loop:
     - dmenu-run

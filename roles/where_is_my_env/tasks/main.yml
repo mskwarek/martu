@@ -61,10 +61,6 @@
   become: true
   include: brave.yml
 
-- name: 'Include i3 tasks'
-  include: i3.yml
-  tags: i3
-
 # It's not a good idea when you're using dockerized env
 # - name: 'Replace every DHCP-based DNS with localhost''s stubby'
 #   lineinfile:
@@ -72,6 +68,3 @@
 #     state: present
 #     path: /etc/dhcp/dhclient.conf
 
-- name: 'Include xmonad tasks'
-  include: xmonad.yml
-  tags: xmonad

@@ -32,5 +32,6 @@
   pip:
     name: "{{ item }}"
     executable: pip3
+    virtualenv_python: /usr/bin/python3
   loop:
     - yapf
