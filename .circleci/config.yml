@@ -8,5 +8,5 @@ jobs:
       - checkout
       - setup_remote_docker:
           docker_layer_cachink: true
-      - run: docker run --rm -v ${PWD}:/work -w /work yokogawa/ansible-lint sh -c 'find . -name "*.yml" | grep -v mails.yml | grep -v hosts.yml | xargs -r ansible-lint --force-color'
+      - run: find . -name "*.yml" | grep -v mails.yml | grep -v hosts.yml | xargs -r ansible-lint --force-color
           
