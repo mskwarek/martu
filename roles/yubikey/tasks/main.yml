@@ -18,7 +18,7 @@
     - pinentry-qt
   become: yes
 
-- name: 'Init gpg home directory'
+- name: 'Init gpg home directory'  # noqa 301 305
   shell: gpg -K
 
 - name: 'Copy GPG config file'

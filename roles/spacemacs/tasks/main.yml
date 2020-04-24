@@ -12,7 +12,7 @@
     dest: ~/.spacemacs
     mode: '0660'
 
-- name: 'Reload spacemacs configuration'
+- name: 'Reload spacemacs configuration'  # noqa 301 305
   shell: emacs --batch -l ~/.emacs.d/init.el --eval="(configuration-layer/update-packages t)"
 
 - name: 'Ensure Elpa key is present in keyring'

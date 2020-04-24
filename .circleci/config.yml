@@ -9,4 +9,3 @@ jobs:
       - setup_remote_docker:
           docker_layer_cachink: true
       - run: find . -name "*.yml" | grep -v mails.yml | grep -v hosts.yml | xargs -r ansible-lint --force-color
-          

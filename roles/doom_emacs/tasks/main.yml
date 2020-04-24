@@ -6,7 +6,7 @@
     dest: '~/.emacs.d'
     version: '279ca195d52bbb0ee8fff4bd0d6cab32cb33565d'
 
-- name: 'Install doom'
+- name: 'Install doom'  # noqa 301 305
   shell: '~/.emacs.d/bin/doom -y install'
 
 - name: 'Copy doom scripts'
