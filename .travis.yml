@@ -1,0 +1,5 @@
+before_install:
+  - 'sudo docker pull yokogawa/ansible-lint'
+
+script:
+  - 'docker run --rm -v ${PWD}:/work -w /work yokogawa/ansible-lint sh -c \'find . -name "*.yml" | grep -v mails.yml | grep -v hosts.yml | xargs -r ansible-lint --force-color\''

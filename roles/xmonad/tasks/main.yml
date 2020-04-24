@@ -12,13 +12,13 @@
     - libghc-xmonad-dev
     - libghc-xmonad-contrib-dev
     - feh
-    
+
 - name: 'Create xmonad directory'
   file:
     path: ~/.xmonad
     state: directory
     mode: 0755
-    
+
 - name: 'Create xmonad /scripts directory'
   file:
     path: ~/.xmonad/scripts
@@ -43,4 +43,3 @@
     - dmenu-run
     - init
     - start
-    

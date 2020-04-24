@@ -56,7 +56,7 @@
     - texlive
     - texlive-latex-extra
     - texlive-plain-generic
-  
+
 - name: 'Include brave tasks'
   become: true
   include: brave.yml
@@ -67,4 +67,3 @@
 #     line: supersede domain-name-servers 127.0.0.1;
 #     state: present
 #     path: /etc/dhcp/dhclient.conf
-

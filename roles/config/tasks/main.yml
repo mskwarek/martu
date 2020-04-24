@@ -6,7 +6,8 @@
     version: master
     dest: ~/.password-store
 
-- include_vars:
+- name: 'Include predefined mail accounts'
+  include_vars:
     file: mails.yml
 
 - name: 'Generate emacs settings'

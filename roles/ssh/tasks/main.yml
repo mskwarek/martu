@@ -1,9 +1,11 @@
 ---
 
-- include_vars:
+- name: 'Include hosts information'
+  include_vars:
     file: hosts.yml
 
-- blockinfile:
+- name: 'Insert hosts to config file'
+  blockinfile:
     dest: ~/.ssh/config
     block: "{{ lookup('template', 'config.j2') }}"
     marker: "# {mark} ANSIBLE MANAGED BLOCK FOR {{ item.host }}"

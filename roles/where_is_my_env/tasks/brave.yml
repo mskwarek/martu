@@ -10,7 +10,7 @@
 - name: 'Add brave repository'
   become: true
   apt_repository:
-    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com {{ansible_lsb.codename}} main
+    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com {{ ansible_lsb.codename }} main
     state: present
     filename: brave
 
